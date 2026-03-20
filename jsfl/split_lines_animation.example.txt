@@ -4,8 +4,5 @@ offset_x=0
 offset_y=16
 # Кадров между первым и вторым ключом (длина classic tween)
 tween_frames=20
-# Easing classic tween: число от -100 (ease in) до 100 (ease out), или:
-# linear | easeIn | easeOut | easeInOut
-ease=0
 # Ступень по времени: каждый следующий слой split_lines на +N кадров позже предыдущего
 layer_stagger=3

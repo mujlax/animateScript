@@ -1,6 +1,6 @@
-Готово: 3 строк → 3 символов, слои split_lines_1…3, позиция как у исходного (matrix), fade 0→100 classic tween 20 кадр., ease 0, слой i: +3 кадр. к слою i−1, 1-й ключ 0,16 px
+Готово: 3 строк → 3 символов, слои split_lines_1…3, позиция как у исходного (matrix), fade 0→100 classic tween 20 кадр., ease_preset in_quad, слой i: +3 кадр. к слою i−1, 1-й ключ 0,16 px
 Symbol 3, Symbol 3 copy 2, Symbol 3 copy 3
-split_lines_animation.txt: offset 0,16px, tween 20 кадр., ease 0, stagger 3
+split_lines_animation.txt: offset 0,16px, tween 20 кадр., ease_preset in_quad, ease legacy 0, stagger 3
 alignment: left
 text field @ 0,0 scale 1,1
 сохранена матрица instance

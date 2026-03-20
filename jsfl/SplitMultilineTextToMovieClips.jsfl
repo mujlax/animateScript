@@ -15,9 +15,6 @@ var FADE_TWEEN_LENGTH_FRAMES = 20;
 var SPLIT_LINE_LAYER_FRAME_STAGGER = 3;
 var FADE_FIRST_KEY_OFFSET_X_PX = 0;
 var FADE_FIRST_KEY_OFFSET_Y_PX = 16;
-// Classic tween easing: -100..100 или ease / linear / easeIn / easeOut / easeInOut
-var FADE_TWEEN_EASE = 0;
-
 function writeStatusAndReturn(title, logs){
   var text = title + (logs && logs.length ? "\n" + logs.join('\n') : "");
   try {
@@ -37,40 +34,20 @@ function parseNumberSafe(s, def){
   return n;
 }
 
-function clampEaseNumber(n){
-  if (typeof n !== 'number' || isNaN(n)) return 0;
-  if (n < -100) return -100;
-  if (n > 100) return 100;
-  return n;
-}
-
-function parseEaseConfigValue(raw){
-  if (raw == null || raw === '') return 0;
-  var s = trimCfgLine(String(raw));
-  if (!s.length) return 0;
-  var low = s.toLowerCase();
-  if (low === 'linear' || low === 'none') return 0;
-  if (low === 'easein' || low === 'ease-in' || low === 'ease_in') return -100;
-  if (low === 'easeout' || low === 'ease-out' || low === 'ease_out') return 100;
-  if (low === 'easeinout' || low === 'ease-in-out' || low === 'ease_in_out') return 0;
-  return clampEaseNumber(parseFloat(s));
-}
-
-// split_lines_animation.txt: offset_x, offset_y, tween_frames, ease, layer_stagger (key=value)
+// split_lines_animation.txt: offset_x, offset_y, tween_frames, layer_stagger
 function readSplitLinesAnimationConfig(logs){
   function log(m){ try{ logs.push(String(m)); }catch(e){} }
   var out = {
     offset_x: FADE_FIRST_KEY_OFFSET_X_PX,
     offset_y: FADE_FIRST_KEY_OFFSET_Y_PX,
     tween_frames: FADE_TWEEN_LENGTH_FRAMES,
-    ease: FADE_TWEEN_EASE,
     layer_stagger: SPLIT_LINE_LAYER_FRAME_STAGGER
   };
   try {
     var scriptDir = fl.scriptURI.substr(0, fl.scriptURI.lastIndexOf('/'));
     var cfgURI = scriptDir + '/split_lines_animation.txt';
     if (!FLfile.exists(cfgURI)) {
-      log("split_lines_animation.txt: нет файла — дефолты (offset "+out.offset_x+","+out.offset_y+", tween "+out.tween_frames+", ease "+out.ease+", stagger "+out.layer_stagger+")");
+      log("split_lines_animation.txt: нет файла — дефолты (offset "+out.offset_x+","+out.offset_y+", tween "+out.tween_frames+", stagger "+out.layer_stagger+")");
       return out;
     }
     var txt = FLfile.read(cfgURI);
@@ -90,10 +67,9 @@ function readSplitLinesAnimationConfig(logs){
       if (k === 'offset_x') out.offset_x = parseNumberSafe(v, out.offset_x);
       else if (k === 'offset_y') out.offset_y = parseNumberSafe(v, out.offset_y);
       else if (k === 'tween_frames') out.tween_frames = Math.max(1, Math.round(parseNumberSafe(v, out.tween_frames)));
-      else if (k === 'ease') out.ease = parseEaseConfigValue(v);
       else if (k === 'layer_stagger') out.layer_stagger = Math.max(0, Math.round(parseNumberSafe(v, out.layer_stagger)));
     }
-    log("split_lines_animation.txt: offset "+out.offset_x+","+out.offset_y+"px, tween "+out.tween_frames+" кадр., ease "+out.ease+", stagger "+out.layer_stagger);
+    log("split_lines_animation.txt: offset "+out.offset_x+","+out.offset_y+"px, tween "+out.tween_frames+" кадр., stagger "+out.layer_stagger);
   } catch(e) {
     log("split_lines_animation.txt: "+e+" — дефолты");
   }
@@ -105,7 +81,6 @@ function applySplitLinesAnimationGlobals(cfg){
   FADE_FIRST_KEY_OFFSET_X_PX = cfg.offset_x;
   FADE_FIRST_KEY_OFFSET_Y_PX = cfg.offset_y;
   FADE_TWEEN_LENGTH_FRAMES = cfg.tween_frames;
-  FADE_TWEEN_EASE = clampEaseNumber(cfg.ease);
   SPLIT_LINE_LAYER_FRAME_STAGGER = cfg.layer_stagger;
 }
 
@@ -742,24 +717,19 @@ function applySplitLineFadeTween(dom, tl, layerIndex, startFrame, logs, placedIn
 
   try {
     tl.setSelectedLayers(layerIndex);
-    // Оба ключевых кадра (первый и второй) должны входить в выделение — иначе classic tween/easing задаются некорректно.
     tl.setSelectedFrames(startFrame, endFrame, true);
-    if (typeof tl.createMotionTween === 'function') {
-      tl.createMotionTween();
-    }
+    if (typeof tl.createMotionTween === 'function') tl.createMotionTween();
+    dom = fl.getDocumentDOM();
+    tl = dom.getTimeline();
     try {
-      dom = fl.getDocumentDOM();
-      tl = dom.getTimeline();
-      var lyrEase = tl.layers[layerIndex];
-      var kfEase = lyrEase ? getKeyframeStart(lyrEase, startFrame) : startFrame;
-      var frEase = lyrEase && lyrEase.frames ? lyrEase.frames[kfEase] : null;
-      if (frEase && typeof FADE_TWEEN_EASE === 'number') {
-        var ez = clampEaseNumber(FADE_TWEEN_EASE);
-        frEase.tweenEasing = ez;
+      var lyr0 = tl.layers[layerIndex];
+      var kf0 = lyr0 ? getKeyframeStart(lyr0, startFrame) : startFrame;
+      var fr0 = lyr0 && lyr0.frames ? lyr0.frames[kf0] : null;
+      if (fr0) {
+        fr0.hasCustomEase = false;
+        fr0.tweenEasing = 0;
       }
-    } catch(eEase) {
-      log("fade: tweenEasing: "+eEase);
-    }
+    } catch(eEase) {}
   } catch(eT) {
     log("createMotionTween: "+eT);
     try {
@@ -1075,7 +1045,7 @@ function main(){
   }
 
   return writeStatusAndReturn(
-    "Готово: "+N+" строк → "+N+" символов, слои split_lines_1…"+N+(HORIZONTAL_STEP_PX ? ", сдвиг X "+HORIZONTAL_STEP_PX+"px" : ", позиция как у исходного (matrix)")+", fade 0→100 classic tween "+FADE_TWEEN_LENGTH_FRAMES+" кадр., ease "+FADE_TWEEN_EASE+(SPLIT_LINE_LAYER_FRAME_STAGGER ? ", слой i: +"+SPLIT_LINE_LAYER_FRAME_STAGGER+" кадр. к слою i−1" : "")+((FADE_FIRST_KEY_OFFSET_X_PX || FADE_FIRST_KEY_OFFSET_Y_PX) ? ", 1-й ключ "+FADE_FIRST_KEY_OFFSET_X_PX+","+FADE_FIRST_KEY_OFFSET_Y_PX+" px" : "")+"\n"+itemNames.join(", "),
+    "Готово: "+N+" строк → "+N+" символов, слои split_lines_1…"+N+(HORIZONTAL_STEP_PX ? ", сдвиг X "+HORIZONTAL_STEP_PX+"px" : ", позиция как у исходного (matrix)")+", fade 0→100 classic tween "+FADE_TWEEN_LENGTH_FRAMES+" кадр."+(SPLIT_LINE_LAYER_FRAME_STAGGER ? ", слой i: +"+SPLIT_LINE_LAYER_FRAME_STAGGER+" кадр. к слою i−1" : "")+((FADE_FIRST_KEY_OFFSET_X_PX || FADE_FIRST_KEY_OFFSET_Y_PX) ? ", 1-й ключ "+FADE_FIRST_KEY_OFFSET_X_PX+","+FADE_FIRST_KEY_OFFSET_Y_PX+" px" : "")+"\n"+itemNames.join(", "),
     logs
   );
 }

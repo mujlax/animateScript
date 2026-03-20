@@ -410,3 +410,15 @@ result=false
 [2026-03-20T15:15:15.475Z] initAiButton: start
 [2026-03-20T15:15:15.478Z] initAiButton: isAI=false
 [2026-03-20T15:15:15.481Z] initAiButton: hidden (not AI host)
+[2026-03-20T15:22:03.532Z] isHostIllustrator?
+appName=FLPR
+result=false
+[2026-03-20T15:22:03.541Z] initAiButton: start
+[2026-03-20T15:22:03.543Z] initAiButton: isAI=false
+[2026-03-20T15:22:03.547Z] initAiButton: hidden (not AI host)
+[2026-03-20T15:27:41.810Z] isHostIllustrator?
+appName=FLPR
+result=false
+[2026-03-20T15:27:41.814Z] initAiButton: start
+[2026-03-20T15:27:41.816Z] initAiButton: isAI=false
+[2026-03-20T15:27:41.817Z] initAiButton: hidden (not AI host)

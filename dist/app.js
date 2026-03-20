@@ -309,17 +309,11 @@
         if (vl != null && String(vl).trim() !== '') lg = parseInt(String(vl).trim(), 10);
         if (isNaN(lg) || lg < 0) lg = 3;
       } catch (e3) { lg = 3; }
-      var easeVal = '0';
-      try {
-        var se = el('splitAnimEase');
-        if (se && se.value != null && String(se.value).length) easeVal = String(se.value).trim();
-      } catch (e4) { easeVal = '0'; }
       const lines = [
         '# split_lines — параметры из панели Timeline Helper',
         'offset_x=' + ox,
         'offset_y=' + oy,
         'tween_frames=' + tf,
-        'ease=' + easeVal,
         'layer_stagger=' + lg
       ];
       const res = window.cep.fs.writeFile(cfgPath, lines.join('\n'));
