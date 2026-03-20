@@ -1,5 +1,10 @@
-Заменено инстансов: 1 на ключах: 1
-Символ: Money_sky copy 2
-duplicateItem(base) called
-detected latest copy: Money_sky copy 2
-resolved dup LibraryItem object for Money_sky copy 2
+Готово: 3 строк → 3 символов, слои split_lines_1…3, позиция как у исходного (matrix), fade 0→100 classic tween 20 кадр., ease 0, слой i: +3 кадр. к слою i−1, 1-й ключ 0,16 px
+Symbol 3, Symbol 3 copy 2, Symbol 3 copy 3
+split_lines_animation.txt: offset 0,16px, tween 20 кадр., ease 0, stagger 3
+alignment: left
+text field @ 0,0 scale 1,1
+сохранена матрица instance
+dup 1: Symbol 3 copy 2
+dup 2: Symbol 3 copy 3
+слой 2: символ на кадре 0, перенос ключа на 3
+слой 3: символ на кадре 0, перенос ключа на 6

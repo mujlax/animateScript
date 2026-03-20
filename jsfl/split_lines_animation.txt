@@ -1,0 +1,6 @@
+# split_lines — параметры из панели Timeline Helper
+offset_x=0
+offset_y=16
+tween_frames=20
+ease=easeInOut
+layer_stagger=3

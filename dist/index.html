@@ -54,11 +54,44 @@
     /* Tooltip at bottom variant */
     button[data-tip][data-tip-pos="bottom"]::after { top: calc(100% + 8px); bottom: auto; }
     button[data-tip][data-tip-pos="bottom"]::before { top: calc(100% + 4px); bottom: auto; transform: translateX(-50%) rotate(45deg); border-left:1px solid #444; border-bottom:1px solid #444; }
+    /* Вкладки: конфиг через data-host — animate | illustrator | any */
+    .tablist { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 10px; border-bottom: 1px solid #3a3a3a; padding-bottom: 8px; }
+    .tablist [role="tab"] {
+      font: inherit; font-size: 12px; font-weight: 500; color: #bdbdbd;
+      width: auto; min-height: 32px; height: auto; padding: 6px 12px; border-radius: 8px 8px 0 0;
+      border: 1px solid transparent; border-bottom: none; background: #333; box-shadow: none;
+    }
+    .tablist [role="tab"]:hover { background: #3c3c3c; color: #eee; }
+    .tablist [role="tab"][aria-selected="true"] {
+      color: #f0f0f0; background: #2f2f2f; border-color: #4a4a4a; border-bottom: 1px solid #2f2f2f; margin-bottom: -1px;
+      box-shadow: inset 0 1px 0 #3a3a3a;
+    }
+    .tablist [role="tab"]:focus-visible { outline: 2px solid #6a9fd4; outline-offset: 2px; }
+    .tablist [data-host="illustrator"] { display: none; }
+    body.host-illustrator .tablist [data-host="animate"] { display: none; }
+    body.host-illustrator .tablist [data-host="illustrator"] { display: inline-flex; }
+    .tabpanel[hidden] { display: none !important; }
+    .text-split-form { margin-bottom: 10px; }
+    .split-anim-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 10px; font-size: 11px; color: #bdbdbd; align-items: end; }
+    .split-anim-grid label { display: flex; flex-direction: column; gap: 4px; }
+    .split-anim-grid input, .split-anim-grid select {
+      width: 100%; box-sizing: border-box; height: 26px; background: #2f2f2f; color: #ddd;
+      border: 1px solid #444; border-radius: 6px; padding: 0 6px; font-size: 12px;
+    }
+    .split-anim-grid select { cursor: pointer; }
+    .split-anim-full { grid-column: 1 / -1; }
   </style>
 </head>
 <body>
   <div class="wrap">
     <h1>Timeline Helper</h1>
+    <div class="tablist" role="tablist" aria-label="Разделы панели" data-tab-group="main">
+      <button type="button" role="tab" id="tab-main-tools" aria-selected="true" aria-controls="panel-main-tools" data-host="animate" tabindex="0">Инструменты</button>
+      <button type="button" role="tab" id="tab-main-anchors" aria-selected="false" aria-controls="panel-main-anchors" data-host="animate" tabindex="-1">Анкеры</button>
+      <button type="button" role="tab" id="tab-main-textlines" aria-selected="false" aria-controls="panel-main-textlines" data-host="animate" tabindex="-1">Текст</button>
+      <button type="button" role="tab" id="tab-main-ai" aria-selected="false" aria-controls="panel-main-ai" data-host="illustrator" tabindex="-1">Illustrator</button>
+    </div>
+    <section id="panel-main-tools" class="tabpanel" role="tabpanel" aria-labelledby="tab-main-tools">
     <div class="row">
       <button id="swapToDup" aria-label="Заменить на дубликат символа" data-tip="Заменить все ключи на один дубликат символа" data-tip-pos="bottom">
         <i data-lucide="refresh-cw" class="icon"></i>
@@ -101,6 +134,8 @@
         <i data-lucide="crop" class="icon"></i>
       </button>
     </div>
+    </section>
+    <section id="panel-main-anchors" class="tabpanel" role="tabpanel" aria-labelledby="tab-main-anchors" hidden>
     <div class="matrix-group">
       <div class="matrix-toolbar">
         <button id="anchor-apply-all" class="btn-toggle" aria-label="Применять ко всем ключам" aria-pressed="true" data-tip="Применять ко всем ключам слоя">
@@ -122,6 +157,40 @@
         <button id="anchor-br" aria-label="Низ-право"><i data-lucide="corner-right-down" class="icon"></i></button>
       </div>
     </div>
+    </section>
+    <section id="panel-main-textlines" class="tabpanel" role="tabpanel" aria-labelledby="tab-main-textlines" hidden>
+    <div class="text-split-form matrix-group">
+      <div class="small" style="margin-bottom:2px;">Анимация split_lines (пишется в <code>jsfl/split_lines_animation.txt</code> при запуске)</div>
+      <div class="split-anim-grid">
+        <label for="splitAnimOffsetX">Сдвиг 1-го ключа X (px)
+          <input id="splitAnimOffsetX" type="number" step="1" value="0" />
+        </label>
+        <label for="splitAnimOffsetY">Сдвиг 1-го ключа Y (px)
+          <input id="splitAnimOffsetY" type="number" step="1" value="16" />
+        </label>
+        <label for="splitAnimTweenFrames">Кадров до 2-го ключа
+          <input id="splitAnimTweenFrames" type="number" min="1" step="1" value="20" />
+        </label>
+        <label for="splitAnimLayerStagger">Ступень слоёв (кадры)
+          <input id="splitAnimLayerStagger" type="number" min="0" step="1" value="3" />
+        </label>
+        <label class="split-anim-full" for="splitAnimEase">Easing classic tween
+          <select id="splitAnimEase" aria-label="Easing">
+            <option value="0">linear (0)</option>
+            <option value="-100">ease in (−100)</option>
+            <option value="100">ease out (100)</option>
+            <option value="easeInOut">ease in-out</option>
+          </select>
+        </label>
+      </div>
+    </div>
+    <div class="row-small">
+      <button id="splitMultilineTextMc" aria-label="Строки текста в отдельных movie clip" data-tip="Многострочный текст внутри MC: N строк → N символов и слоёв split_lines_*; копии на сцене совпадают по трансформу с исходным MC. Выделите MC на сцене. Параметры анимации — поля выше." data-tip-pos="bottom">
+        <i data-lucide="align-left" class="icon"></i>
+      </button>
+    </div>
+    </section>
+    <section id="panel-main-ai" class="tabpanel" role="tabpanel" aria-labelledby="tab-main-ai" hidden>
     <div class="options">
       <button id="runTraceOnce" class="btn-toggle" data-tip="Выполнить Image Trace (Illustrator)">
         <i data-lucide="wand-2" class="icon"></i>
@@ -145,6 +214,7 @@
         <i data-lucide="plus" class="icon"></i>
       </button>
     </div>
+    </section>
     <div class="footer">
       <div class="status" id="status"></div>
       <div class="small">Панель вызывает JSFL-скрипты из папки <code>jsfl</code>.</div>

@@ -190,3 +190,223 @@ appName=FLPR
 result=false
 [2026-03-20T12:22:53.203Z] initAiButton: isAI=false
 [2026-03-20T12:22:53.204Z] initAiButton: hidden (not AI host)
+[2026-03-20T13:57:54.301Z] initAiButton: start
+[2026-03-20T13:57:54.307Z] isHostIllustrator?
+appName=FLPR
+result=false
+[2026-03-20T13:57:54.314Z] initAiButton: isAI=false
+[2026-03-20T13:57:54.321Z] initAiButton: hidden (not AI host)
+[2026-03-20T14:00:31.082Z] isHostIllustrator?
+appName=FLPR
+result=false
+[2026-03-20T14:00:31.089Z] initAiButton: start
+[2026-03-20T14:00:31.090Z] initAiButton: isAI=false
+[2026-03-20T14:00:31.092Z] initAiButton: hidden (not AI host)
+[2026-03-20T14:09:51.438Z] isHostIllustrator?
+appName=FLPR
+result=false
+[2026-03-20T14:09:51.443Z] initAiButton: start
+[2026-03-20T14:09:51.446Z] initAiButton: isAI=false
+[2026-03-20T14:09:51.448Z] initAiButton: hidden (not AI host)
+[2026-03-20T14:11:01.005Z] isHostIllustrator?
+appName=FLPR
+result=false
+[2026-03-20T14:11:01.016Z] initAiButton: start
+[2026-03-20T14:11:01.018Z] initAiButton: isAI=false
+[2026-03-20T14:11:01.027Z] initAiButton: hidden (not AI host)
+[2026-03-20T14:13:06.501Z] isHostIllustrator?
+appName=FLPR
+result=false
+[2026-03-20T14:13:06.505Z] initAiButton: start
+[2026-03-20T14:13:06.508Z] initAiButton: isAI=false
+[2026-03-20T14:13:06.510Z] initAiButton: hidden (not AI host)
+[2026-03-20T14:14:42.994Z] isHostIllustrator?
+appName=FLPR
+result=false
+[2026-03-20T14:14:42.997Z] initAiButton: start
+[2026-03-20T14:14:42.999Z] initAiButton: isAI=false
+[2026-03-20T14:14:43.001Z] initAiButton: hidden (not AI host)
+[2026-03-20T14:15:55.693Z] isHostIllustrator?
+appName=FLPR
+result=false
+[2026-03-20T14:15:55.698Z] initAiButton: start
+[2026-03-20T14:15:55.700Z] initAiButton: isAI=false
+[2026-03-20T14:15:55.702Z] initAiButton: hidden (not AI host)
+[2026-03-20T14:19:03.673Z] isHostIllustrator?
+appName=FLPR
+result=false
+[2026-03-20T14:19:03.683Z] initAiButton: start
+[2026-03-20T14:19:03.686Z] initAiButton: isAI=false
+[2026-03-20T14:19:03.689Z] initAiButton: hidden (not AI host)
+[2026-03-20T14:20:21.734Z] isHostIllustrator?
+appName=FLPR
+result=false
+[2026-03-20T14:20:21.738Z] initAiButton: start
+[2026-03-20T14:20:21.740Z] initAiButton: isAI=false
+[2026-03-20T14:20:21.742Z] initAiButton: hidden (not AI host)
+[2026-03-20T14:24:49.259Z] isHostIllustrator?
+appName=FLPR
+result=false
+[2026-03-20T14:24:49.267Z] initAiButton: start
+[2026-03-20T14:24:49.271Z] initAiButton: isAI=false
+[2026-03-20T14:24:49.275Z] initAiButton: hidden (not AI host)
+[2026-03-20T14:25:10.194Z] isHostIllustrator?
+appName=FLPR
+result=false
+[2026-03-20T14:25:10.200Z] initAiButton: start
+[2026-03-20T14:25:10.209Z] initAiButton: isAI=false
+[2026-03-20T14:25:10.219Z] initAiButton: hidden (not AI host)
+[2026-03-20T14:31:51.676Z] isHostIllustrator?
+appName=FLPR
+result=false
+[2026-03-20T14:31:51.683Z] initAiButton: start
+[2026-03-20T14:31:51.685Z] initAiButton: isAI=false
+[2026-03-20T14:31:51.688Z] initAiButton: hidden (not AI host)
+[2026-03-20T14:34:01.055Z] isHostIllustrator?
+appName=FLPR
+result=false
+[2026-03-20T14:34:01.060Z] initAiButton: start
+[2026-03-20T14:34:01.062Z] initAiButton: isAI=false
+[2026-03-20T14:34:01.064Z] initAiButton: hidden (not AI host)
+[2026-03-20T14:36:03.917Z] isHostIllustrator?
+appName=FLPR
+result=false
+[2026-03-20T14:36:03.924Z] initAiButton: start
+[2026-03-20T14:36:03.928Z] initAiButton: isAI=false
+[2026-03-20T14:36:03.932Z] initAiButton: hidden (not AI host)
+[2026-03-20T14:42:06.202Z] isHostIllustrator?
+appName=FLPR
+result=false
+[2026-03-20T14:42:06.206Z] initAiButton: start
+[2026-03-20T14:42:06.208Z] initAiButton: isAI=false
+[2026-03-20T14:42:06.212Z] initAiButton: hidden (not AI host)
+[2026-03-20T14:46:01.696Z] isHostIllustrator?
+appName=FLPR
+result=false
+[2026-03-20T14:46:01.712Z] initAiButton: start
+[2026-03-20T14:46:01.729Z] initAiButton: isAI=false
+[2026-03-20T14:46:01.755Z] initAiButton: hidden (not AI host)
+[2026-03-20T14:49:08.308Z] isHostIllustrator?
+appName=FLPR
+result=false
+[2026-03-20T14:49:08.312Z] initAiButton: start
+[2026-03-20T14:49:08.313Z] initAiButton: isAI=false
+[2026-03-20T14:49:08.314Z] initAiButton: hidden (not AI host)
+[2026-03-20T14:50:46.172Z] isHostIllustrator?
+appName=FLPR
+result=false
+[2026-03-20T14:50:46.177Z] initAiButton: start
+[2026-03-20T14:50:46.182Z] initAiButton: isAI=false
+[2026-03-20T14:50:46.184Z] initAiButton: hidden (not AI host)
+[2026-03-20T14:53:48.658Z] isHostIllustrator?
+appName=FLPR
+result=false
+[2026-03-20T14:53:48.667Z] initAiButton: start
+[2026-03-20T14:53:48.671Z] initAiButton: isAI=false
+[2026-03-20T14:53:48.673Z] initAiButton: hidden (not AI host)
+[2026-03-20T14:55:26.168Z] isHostIllustrator?
+appName=FLPR
+result=false
+[2026-03-20T14:55:26.172Z] initAiButton: start
+[2026-03-20T14:55:26.175Z] initAiButton: isAI=false
+[2026-03-20T14:55:26.178Z] initAiButton: hidden (not AI host)
+[2026-03-20T14:55:37.545Z] isHostIllustrator?
+appName=FLPR
+result=false
+[2026-03-20T14:55:37.550Z] initAiButton: start
+[2026-03-20T14:55:37.551Z] initAiButton: isAI=false
+[2026-03-20T14:55:37.555Z] initAiButton: hidden (not AI host)
+[2026-03-20T14:57:53.947Z] isHostIllustrator?
+appName=FLPR
+result=false
+[2026-03-20T14:57:54.019Z] initAiButton: start
+[2026-03-20T14:57:54.021Z] initAiButton: isAI=false
+[2026-03-20T14:57:54.022Z] initAiButton: hidden (not AI host)
+[2026-03-20T14:59:48.742Z] isHostIllustrator?
+appName=FLPR
+result=false
+[2026-03-20T14:59:48.782Z] initAiButton: start
+[2026-03-20T14:59:48.793Z] initAiButton: isAI=false
+[2026-03-20T14:59:48.799Z] initAiButton: hidden (not AI host)
+[2026-03-20T15:03:27.968Z] isHostIllustrator?
+appName=FLPR
+result=false
+[2026-03-20T15:03:27.973Z] initAiButton: start
+[2026-03-20T15:03:27.976Z] initAiButton: isAI=false
+[2026-03-20T15:03:27.981Z] initAiButton: hidden (not AI host)
+[2026-03-20T15:05:50.775Z] isHostIllustrator?
+appName=FLPR
+result=false
+[2026-03-20T15:05:50.779Z] initAiButton: start
+[2026-03-20T15:05:50.780Z] initAiButton: isAI=false
+[2026-03-20T15:05:50.782Z] initAiButton: hidden (not AI host)
+[2026-03-20T15:08:06.885Z] isHostIllustrator?
+appName=FLPR
+result=false
+[2026-03-20T15:08:06.893Z] initAiButton: start
+[2026-03-20T15:08:06.896Z] initAiButton: isAI=false
+[2026-03-20T15:08:06.907Z] initAiButton: hidden (not AI host)
+[2026-03-20T15:08:33.906Z] isHostIllustrator?
+appName=FLPR
+result=false
+[2026-03-20T15:08:33.915Z] initAiButton: start
+[2026-03-20T15:08:33.918Z] initAiButton: isAI=false
+[2026-03-20T15:08:33.920Z] initAiButton: hidden (not AI host)
+[2026-03-20T15:11:04.345Z] isHostIllustrator?
+appName=FLPR
+result=false
+[2026-03-20T15:11:04.349Z] initAiButton: start
+[2026-03-20T15:11:04.351Z] initAiButton: isAI=false
+[2026-03-20T15:11:04.353Z] initAiButton: hidden (not AI host)
+[2026-03-20T15:12:34.703Z] isHostIllustrator?
+appName=FLPR
+result=false
+[2026-03-20T15:12:34.716Z] initAiButton: start
+[2026-03-20T15:12:34.718Z] initAiButton: isAI=false
+[2026-03-20T15:12:34.719Z] initAiButton: hidden (not AI host)
+[2026-03-20T15:12:41.443Z] keydown
+key=3
+code=Digit3
+keyCode=51
+which=51
+ctrl=false
+meta=false
+shift=false
+[2026-03-20T15:12:41.588Z] keydown
+key=0
+code=Digit0
+keyCode=48
+which=48
+ctrl=false
+meta=false
+shift=false
+[2026-03-20T15:12:44.058Z] keydown
+key=6
+code=Digit6
+keyCode=54
+which=54
+ctrl=false
+meta=false
+shift=false
+[2026-03-20T15:12:46.461Z] keydown
+key=3
+code=Digit3
+keyCode=51
+which=51
+ctrl=false
+meta=false
+shift=false
+[2026-03-20T15:12:46.507Z] keydown
+key=0
+code=Digit0
+keyCode=48
+which=48
+ctrl=false
+meta=false
+shift=false
+[2026-03-20T15:15:15.468Z] isHostIllustrator?
+appName=FLPR
+result=false
+[2026-03-20T15:15:15.475Z] initAiButton: start
+[2026-03-20T15:15:15.478Z] initAiButton: isAI=false
+[2026-03-20T15:15:15.481Z] initAiButton: hidden (not AI host)

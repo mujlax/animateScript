@@ -131,42 +131,121 @@
     evalExtendScript(code, function(res){ setStatus('AI: ' + res); writeDebug(['expandTraceLayer: res', String(res)]); });
   }
 
+  var TAB_STORAGE_PREFIX = 'timelinehelper.tab.';
+
+  function tabIsVisible(tab) {
+    try {
+      var h = tab.getAttribute('data-host') || '';
+      if (h === 'illustrator') return document.body.classList.contains('host-illustrator');
+      if (h === 'animate') return !document.body.classList.contains('host-illustrator');
+      return true;
+    } catch (e) { return true; }
+  }
+
+  function getVisibleTabsInList(list) {
+    var tabs = list.querySelectorAll('[role="tab"]');
+    var out = [];
+    for (var i = 0; i < tabs.length; i++) {
+      if (tabIsVisible(tabs[i])) out.push(tabs[i]);
+    }
+    return out;
+  }
+
+  function activateTabInList(list, tab) {
+    if (!list || !tab) return;
+    var panelId = tab.getAttribute('aria-controls');
+    if (!panelId) return;
+    var tabs = list.querySelectorAll('[role="tab"]');
+    for (var i = 0; i < tabs.length; i++) {
+      var t = tabs[i];
+      var pid = t.getAttribute('aria-controls');
+      var panel = pid ? document.getElementById(pid) : null;
+      var selected = (t === tab);
+      t.setAttribute('aria-selected', selected ? 'true' : 'false');
+      t.tabIndex = selected ? 0 : -1;
+      if (panel) {
+        if (selected) panel.removeAttribute('hidden');
+        else panel.setAttribute('hidden', '');
+      }
+    }
+    var gid = list.getAttribute('data-tab-group') || 'default';
+    try { sessionStorage.setItem(TAB_STORAGE_PREFIX + gid, panelId); } catch (e) {}
+  }
+
+  function initTabGroups() {
+    function activateTabPanelById(panelId) {
+      var panel = document.getElementById(panelId);
+      if (!panel || panel.getAttribute('role') !== 'tabpanel') return;
+      var tab = document.querySelector('[role="tab"][aria-controls="' + panelId + '"]');
+      if (!tab || !tabIsVisible(tab)) return;
+      var list = tab.closest('[role="tablist"]');
+      if (!list) return;
+      activateTabInList(list, tab);
+    }
+
+    window.__TimelineHelper = window.__TimelineHelper || {};
+    window.__TimelineHelper.activateTabPanel = activateTabPanelById;
+
+    var lists = document.querySelectorAll('[role="tablist"]');
+    for (var li = 0; li < lists.length; li++) {
+      (function wire(list) {
+        var gid = list.getAttribute('data-tab-group') || 'default';
+        var stored = null;
+        try { stored = sessionStorage.getItem(TAB_STORAGE_PREFIX + gid); } catch (e0) {}
+
+        function pickInitialTab() {
+          var visible = getVisibleTabsInList(list);
+          if (stored && visible.length) {
+            for (var v = 0; v < visible.length; v++) {
+              if (visible[v].getAttribute('aria-controls') === stored) return visible[v];
+            }
+          }
+          return visible[0] || null;
+        }
+
+        var initial = pickInitialTab();
+        if (initial) activateTabInList(list, initial);
+
+        var tabs = list.querySelectorAll('[role="tab"]');
+        for (var j = 0; j < tabs.length; j++) {
+          tabs[j].addEventListener('click', function () {
+            if (!tabIsVisible(this)) return;
+            activateTabInList(list, this);
+          });
+        }
+
+        list.addEventListener('keydown', function (e) {
+          if (!e || (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight')) return;
+          var visible = getVisibleTabsInList(list);
+          if (visible.length < 2) return;
+          var ix = -1;
+          for (var k = 0; k < visible.length; k++) {
+            if (visible[k].getAttribute('aria-selected') === 'true') { ix = k; break; }
+          }
+          if (ix < 0) ix = 0;
+          var next = e.key === 'ArrowRight' ? (ix + 1) % visible.length : (ix - 1 + visible.length) % visible.length;
+          try { e.preventDefault(); } catch (p) {}
+          activateTabInList(list, visible[next]);
+          try { visible[next].focus(); } catch (f) {}
+        });
+      })(lists[li]);
+    }
+  }
+
   // UI toggle for Illustrator
   (function initAiButton(){
+    var inAI = isHostIllustrator();
+    try { document.body.classList.toggle('host-illustrator', inAI); } catch (eC) {}
     var btn = document.getElementById('runTraceOnce');
-    var thr = document.getElementById('runTraceThreshold');
     var shrinkBtn = document.getElementById('shrinkTrace');
     var expandBtn = document.getElementById('expandTrace');
     writeDebug(['initAiButton: start']);
-    if (!btn) { writeDebug(['initAiButton: btn not found']); return; }
-    var inAI = isHostIllustrator();
     writeDebug(['initAiButton: isAI='+inAI]);
     if (!inAI) {
-      if (btn.parentElement) btn.parentElement.style.display = 'none';
-      try {
-        var aiRows = document.querySelectorAll('.ai-only');
-        for (var r=0;r<aiRows.length;r++){ aiRows[r].style.display = 'none'; }
-      } catch(eRow){}
       writeDebug(['initAiButton: hidden (not AI host)']);
       return;
     }
-    // В Illustrator прячем остальной UI панели, оставляем блок options (кнопка+threshold) и новую строку с +/-
-    try {
-      var wrap = document.querySelector('.wrap');
-      if (wrap) {
-        var nodes = Array.prototype.slice.call(wrap.children||[]);
-        for (var i=0;i<nodes.length;i++){
-          var el = nodes[i];
-          try {
-            var isOptions = (el.classList && el.classList.contains('options'));
-            var isFooter = (el.classList && el.classList.contains('footer'));
-            var isAiRow = (el.classList && el.classList.contains('ai-only'));
-            var isHeader = (el.tagName === 'H1');
-            if (!isOptions && !isFooter && !isHeader && !isAiRow) { el.style.display = 'none'; }
-          } catch(eh){}
-        }
-      }
-    } catch(eHide) {}
+    if (!btn) { writeDebug(['initAiButton: btn not found']); return; }
     btn.addEventListener('click', function(){
       writeDebug(['runTraceOnce: click']);
       runImageTraceOnce();
@@ -186,6 +265,8 @@
     writeDebug(['initAiButton: ready']);
   })();
 
+  initTabGroups();
+
   function writeApplyAll(on) {
     try {
       if (!cs) return;
@@ -195,6 +276,62 @@
         window.cep.fs.writeFile(allPath, on ? '1' : '0');
       }
     } catch(e) { /* ignore */ }
+  }
+
+  /** Записать split_lines_animation.txt из полей вкладки «Текст» перед SplitMultilineTextToMovieClips.jsfl */
+  function writeSplitLinesAnimationFromUI() {
+    try {
+      if (!cs || !window.cep || !window.cep.fs || !window.cep.fs.writeFile) return false;
+      const extDir = cs.getSystemPath(SystemPath.EXTENSION);
+      const cfgPath = extDir + '/jsfl/split_lines_animation.txt';
+      const el = function (id) { return document.getElementById(id); };
+      var ox = 0;
+      var oy = 0;
+      var tf = 20;
+      var lg = 3;
+      try {
+        var vx = el('splitAnimOffsetX') && el('splitAnimOffsetX').value;
+        if (vx != null && String(vx).trim() !== '') ox = parseFloat(String(vx).replace(',', '.'));
+        if (isNaN(ox)) ox = 0;
+      } catch (e0) { ox = 0; }
+      try {
+        var vy = el('splitAnimOffsetY') && el('splitAnimOffsetY').value;
+        if (vy != null && String(vy).trim() !== '') oy = parseFloat(String(vy).replace(',', '.'));
+        if (isNaN(oy)) oy = 16;
+      } catch (e1) { oy = 16; }
+      try {
+        var vt = el('splitAnimTweenFrames') && el('splitAnimTweenFrames').value;
+        if (vt != null && String(vt).trim() !== '') tf = parseInt(String(vt).trim(), 10);
+        if (isNaN(tf) || tf < 1) tf = 20;
+      } catch (e2) { tf = 20; }
+      try {
+        var vl = el('splitAnimLayerStagger') && el('splitAnimLayerStagger').value;
+        if (vl != null && String(vl).trim() !== '') lg = parseInt(String(vl).trim(), 10);
+        if (isNaN(lg) || lg < 0) lg = 3;
+      } catch (e3) { lg = 3; }
+      var easeVal = '0';
+      try {
+        var se = el('splitAnimEase');
+        if (se && se.value != null && String(se.value).length) easeVal = String(se.value).trim();
+      } catch (e4) { easeVal = '0'; }
+      const lines = [
+        '# split_lines — параметры из панели Timeline Helper',
+        'offset_x=' + ox,
+        'offset_y=' + oy,
+        'tween_frames=' + tf,
+        'ease=' + easeVal,
+        'layer_stagger=' + lg
+      ];
+      const res = window.cep.fs.writeFile(cfgPath, lines.join('\n'));
+      if (!res || res.err !== 0) {
+        setStatus('Не удалось записать split_lines_animation.txt: ' + (res && res.err));
+        return false;
+      }
+      return true;
+    } catch (e) {
+      setStatus('split_lines_animation: ' + e);
+      return false;
+    }
   }
 
   document.getElementById('swapToDup')?.addEventListener('click', function () {
@@ -226,6 +363,10 @@
   });
   document.getElementById('openBitmapInAi')?.addEventListener('click', function(){
     runJSFL('OpenBitmapInIllustrator.jsfl');
+  });
+  document.getElementById('splitMultilineTextMc')?.addEventListener('click', function(){
+    if (!writeSplitLinesAnimationFromUI()) return;
+    runJSFL('SplitMultilineTextToMovieClips.jsfl');
   });
   document.getElementById('listParents')?.addEventListener('click', function(){
     runJSFL('ListParentSymbols.jsfl');
