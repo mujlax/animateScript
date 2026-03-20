@@ -1,0 +1,5 @@
+Заменено инстансов: 1 на ключах: 1
+Символ: Money_sky copy 2
+duplicateItem(base) called
+detected latest copy: Money_sky copy 2
+resolved dup LibraryItem object for Money_sky copy 2
